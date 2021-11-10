@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+  <h1 class="text-center">{{ title }}</h1>
+  <div class="text-center">{{ path }}</div>
+</div>
+<br>
+<div class="container">
+  <h2 class="text-center">Request Headers</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Header Key</th>
+        <th scope="col">Header Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for header in received_headers %}
+      <tr>
+        <td>
+          <span>{{ header.0 }}</span>
+        </td>
+        <td>
+          <span>{{ header.1 }}</span>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="container">
+   <h2 class="text-center">Request Cookies</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Cookie Property</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        {% for cookie in client_cookies %}
+        <tr>
+          <td>
+            <span>{{ cookie.0 }}</span>
+          </td>
+          <td>
+            <span>{{ cookie.1 }}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+</div>
+{% endblock %}
