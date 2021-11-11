@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 from .forms import GuestChatForm
 from .models import Message
+
 
 # Домашняя страничка
 def index(request):
@@ -49,10 +51,28 @@ def guest_chat_view(request):
             return HttpResponseRedirect('chat')
     else:
         form = GuestChatForm()
-    context = {
-        'title': 'Гостевой чатик!',
-        'form': form,
-        'path': request.path,
-        'entries': Message.objects.all()
-    }
+    author_name = request.GET.get('name', None)
+    if author_name:
+        context = {
+            'title': 'Гостевой чатик!',
+            'form': form,
+            'path': request.path,
+            'entries': Message.objects.filter(name=author_name)
+        }
+    else:
+        context = {
+            'title': 'Гостевой чатик!',
+            'form': form,
+            'path': request.path,
+            'entries': Message.objects.all()
+        }
     return render(request, 'testapp/guest_chat.html', context)
+
+
+@require_http_methods(['GET'])
+def get_message_view(request, message_id):
+    message = get_object_or_404(Message, id=message_id)
+    context = {
+        'message': message,
+    }
+    return render(request, 'testapp/message.html', context)

@@ -33,8 +33,11 @@
                                     <p class="card-text mb-auto">{{ item.message }}</p>
                             </blockquote>
                             <figcaption class="blockquote-footer">
-                                <cite title="Source Title">{{ item.name }}</cite>
+                                {% url 'chat' as chat_url%}
+                                <cite title="Source Title"><a href="{{ chat_url }}?name={{ item.name }}">{{ item.name }}</a></cite>
                             </figcaption>
+                            {% url 'message_inf' message_id=item.id as message_inf_url%}
+                            <a href="{{ message_inf_url }}"><small class="text-muted">Читать подробнее</small></a>
                         </div>
                     </div>
                 </div>
