@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.conf.urls import url
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
@@ -48,7 +49,7 @@ def guest_chat_view(request):
                 message=form.cleaned_data.get('message')
             )
             messages.success(request, 'Отправлено!')
-            return HttpResponseRedirect('chat')
+            return redirect(reverse('chat'))
     else:
         form = GuestChatForm()
     author_name = request.GET.get('name', None)
