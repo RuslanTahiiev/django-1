@@ -19,7 +19,7 @@
         </div>
         <div class="col-7">
             <p class="h2">Отзывы</p>
-            {% for item in entries%}
+            {% for item in entries %}
                 <div class="row">
                     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col p-4 d-flex flex-column position-static">
@@ -30,14 +30,13 @@
                                 </svg>
                             </div>
                             <blockquote class="blockquote">
-                                    <p class="card-text mb-auto">{{ item.message | truncatewords:10 }}</p>
+                                    <p class="card-text mb-auto">{{ item.message | truncatewords:5 }}</p>
                             </blockquote>
                             <figcaption class="blockquote-footer">
                                 {% url 'chat' as chat_url%}
                                 <cite title="Source Title"><a href="{{ chat_url }}?name={{ item.name }}">{{ item.name }}</a></cite>
                             </figcaption>
-                            {% url 'message_inf' message_id=item.id as message_inf_url%}
-                            <a href="{{ message_inf_url }}"><small class="text-muted">Читать подробнее</small></a>
+                            <a href="{{ item.get_absolute_url }}"><small class="text-muted">Читать подробнее</small></a>
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,10 @@
-from django.conf.urls import url
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+
 from .forms import GuestChatForm
 from .models import Message
 
@@ -65,7 +65,7 @@ def guest_chat_view(request):
             'title': 'Гостевой чатик!',
             'form': form,
             'path': request.path,
-            'entries': Message.objects.all()
+            'entries': Message.objects.order_by('-create_date').all()
         }
     return render(request, 'testapp/guest_chat.html', context)
 
