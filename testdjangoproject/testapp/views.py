@@ -13,7 +13,7 @@ from .models import Message
 def index(request):
     context = {
         'title': 'Django',
-        'description': 'Запуск первого приложения на Django!'
+        'description': 'Запуск приложения на Django!'
     }
     return render(request, 'testapp/index.html', context)
 
