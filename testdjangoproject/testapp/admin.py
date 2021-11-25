@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Message
+from .models import ChatMessage
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -9,6 +9,7 @@ class MessageAdmin(admin.ModelAdmin):
     search_fields = ('create_date',)
     list_editable = ('create_date',)
     list_filter = ('name', 'create_date',)
+    prepopulated_fields = {'slug': ('name',)}
 
 
-admin.site.register(Message, MessageAdmin)
+admin.site.register(ChatMessage, MessageAdmin)

@@ -1,17 +1,17 @@
 from django import template
-from ..models import Message
+from ..models import ChatMessage
 
 register = template.Library()
 
 
 @register.simple_tag(name='getmessages')
 def get_messages():
-    return Message.objects.all()
+    return ChatMessage.objects.all()
 
 
 @register.inclusion_tag('testapp/get_messages.html')
 def show_messages():
-    messages = Message.objects.all()
+    messages = ChatMessage.objects.all()
     context = {
         'messages': messages
     }

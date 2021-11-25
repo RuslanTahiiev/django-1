@@ -5,8 +5,10 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
+import datetime
+
 from .forms import GuestChatForm
-from .models import Message
+from .models import ChatMessage
 
 
 # Домашняя страничка
@@ -44,10 +46,12 @@ def guest_chat_view(request):
     if request.method == 'POST':
         form = GuestChatForm(request.POST)
         if form.is_valid():
-            Message.objects.create(
-                name=form.cleaned_data.get('name'),
-                message=form.cleaned_data.get('message')
+            obj = ChatMessage.objects.create(
+                **form.cleaned_data,
+                create_date=datetime.datetime.now(),
             )
+            obj.save()
+
             messages.success(request, 'Отправлено!')
             return redirect(reverse('chat'))
     else:
@@ -58,22 +62,31 @@ def guest_chat_view(request):
             'title': 'Гостевой чатик!',
             'form': form,
             'path': request.path,
-            'entries': Message.objects.filter(name=author_name)
+            'entries': ChatMessage.objects.filter(name=author_name)
         }
     else:
         context = {
             'title': 'Гостевой чатик!',
             'form': form,
             'path': request.path,
-            'entries': Message.objects.order_by('-create_date').all()
+            'entries': ChatMessage.objects.order_by('-create_date').all()
         }
     return render(request, 'testapp/guest_chat.html', context)
 
 
 @require_http_methods(['GET'])
 def get_message_view(request, message_id):
-    message = get_object_or_404(Message, id=message_id)
+    message = get_object_or_404(ChatMessage, id=message_id)
     context = {
         'message': message,
     }
     return render(request, 'testapp/message.html', context)
+
+
+@require_http_methods(['GET'])
+def get_author_view(request, message_slug):
+    author_messages = ChatMessage.objects.filter(slug=message_slug).all()
+    context = {
+        'messages': author_messages,
+    }
+    return render(request, 'testapp/messages.html', context)
