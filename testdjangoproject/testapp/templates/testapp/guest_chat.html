@@ -3,13 +3,15 @@
 {% load static %}
 {% load message_tags %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
 
 <div class="container">
     <div class="row">
         <div class="col-5">
             <form method="POST">
-                {{ form.csrf_token }}
+                {% csrf_token %}
                 <p class="h2">Оставьте Ваше сообщение: </p>
                 {% for field in form %}
                         {{ field.errors }}

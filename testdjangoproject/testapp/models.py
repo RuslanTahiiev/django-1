@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from django.urls import reverse
@@ -21,6 +23,7 @@ class ChatMessage(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name+str(self.id))
+        self.create_date = datetime.datetime.now()
         super(ChatMessage, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
