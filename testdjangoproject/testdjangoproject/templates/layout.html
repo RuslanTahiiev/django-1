@@ -10,12 +10,18 @@
 {% block body %}
 <body>
     <header class="d-flex justify-content-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="/chat" class="nav-link">Chat</a></li>
-        <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="/json" class="nav-link">Json</a></li>
-      </ul>
+        <ul class="nav nav-pills">
+            {% url 'index' as index_url %}
+            <li class="nav-item"><a href="{{ index_url }}" class="nav-link active" aria-current="page">Home</a></li>
+            {% url 'chat' as chat_url %}
+            <li class="nav-item"><a href="{{ chat_url }}" class="nav-link">Chat</a></li>
+            {% url 'about' as about_url %}
+            <li class="nav-item"><a href="{{ about_url }}" class="nav-link">About</a></li>
+            {% url 'json' as json_url %}
+            <li class="nav-item"><a href="{{ json_url }}" class="nav-link">Json</a></li>
+            {% url 'signup' as signup_url %}
+            <li class="nav-item"><a href="{{ signup_url }}" class="nav-link">Sign Up</a></li>
+        </ul>
     </header>
     {% block content %}
     {% endblock %}

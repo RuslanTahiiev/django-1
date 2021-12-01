@@ -37,7 +37,7 @@
                                     <p class="card-text mb-auto">{{ item.message | truncatewords:5 }}</p>
                             </blockquote>
                             <figcaption class="blockquote-footer">
-                                {% url 'chat' as chat_url%}
+                                {% url 'chat' as chat_url %}
                                 <cite title="Source Title"><a href="{{ chat_url }}?name={{ item.name }}">{{ item.name }}</a></cite>
                             </figcaption>
                             <a href="{{ item.get_absolute_url }}"><small class="text-muted">Читать подробнее</small></a>
