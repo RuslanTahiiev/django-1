@@ -19,8 +19,16 @@
             <li class="nav-item"><a href="{{ about_url }}" class="nav-link">About</a></li>
             {% url 'json' as json_url %}
             <li class="nav-item"><a href="{{ json_url }}" class="nav-link">Json</a></li>
-            {% url 'signup' as signup_url %}
-            <li class="nav-item"><a href="{{ signup_url }}" class="nav-link">Sign Up</a></li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item"><a href="#" class="nav-link">{{ user.username }}</a></li>
+                {% url 'logout' as logout_url %}
+                <li class="nav-item"><a href="{{ logout_url }}" class="nav-link">Logout</a></li>
+            {% else %}
+                {% url 'signup' as signup_url %}
+                <li class="nav-item"><a href="{{ signup_url }}" class="nav-link">Sign Up</a></li>
+                {% url 'signin' as signin_url %}
+                <li class="nav-item"><a href="{{ signin_url }}" class="nav-link">Sign In</a></li>
+            {% endif %}
         </ul>
     </header>
     {% block content %}
