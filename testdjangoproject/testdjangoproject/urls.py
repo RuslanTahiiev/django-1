@@ -16,8 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from testdjangoproject import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('testapp.urls')),
     path('', include('authmodule.urls')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
