@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 # from django.forms import CharField, Textarea, IntegerField
+from captcha.fields import CaptchaField
 
 import datetime
 
@@ -37,9 +38,11 @@ class GuestChatForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # self.fields['name'].empty_label = 'Name'
 
+    captcha = CaptchaField()
+
     class Meta:
         model = ChatMessage
-        fields = ['name', 'message']
+        fields = ['name', 'message', 'captcha']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control'
